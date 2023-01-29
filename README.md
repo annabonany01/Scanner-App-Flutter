@@ -52,19 +52,10 @@ cupertino_icons: ^1.0.2
 document_scanner_flutter: ^0.2.7
 ```
 ```
-image_picker: ^0.8.6
-```
-```
-pdf: ^3.8.4
-```
-```
-photo_view: ^0.12.0
-```
-```
-path_provider: ^2.0.11
-```
-```
 provider: ^6.0.5
+```
+```
+uuid: ^3.0.7
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
