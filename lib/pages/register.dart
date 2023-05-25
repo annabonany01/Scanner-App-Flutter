@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_scanner/providers/login_form_provider.dart';
-import 'package:qr_scanner/ui/input_decoration.dart';
 
-class PinPage extends StatelessWidget {
+import '../providers/login_form_provider.dart';
+import '../ui/input_decoration.dart';
+
+class Register extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 70),
-              child:
-                  Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                        width: 200,
-                        child: Image(image: AssetImage('assets/educat.png'))),
-                    const SizedBox(height: 30),
-                    ChangeNotifierProvider(
-                        create: (_) => LoginFormProvider(),
-                        child: _LoginForm()),
-                    const SizedBox(height: 30),
-                  ],
-                ),
-              ]),
-            )));
+      physics: BouncingScrollPhysics(),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                  width: 200,
+                  child: Image(image: AssetImage('assets/educat.png'))),
+              const SizedBox(height: 30),
+              ChangeNotifierProvider(
+                  create: (_) => LoginFormProvider(), child: _LoginForm()),
+              const SizedBox(height: 30),
+            ],
+          ),
+        ]),
+      ),
+    ));
   }
 }
 
@@ -42,12 +42,39 @@ class _LoginForm extends StatelessWidget {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           children: [
+            TextFormField(
+              autocorrect: false,
+              keyboardType: TextInputType.name,
+              decoration: InputDecorations.authInputDecoration(
+                hintText: 'Marta Gomez',
+                labelText: 'Nom i Cognom',
+              ),
+              onChanged: (value) => loginForm.name = value,
+              validator: (value) {
+                //TODO: VALIDAR
+              },
+            ),
+            SizedBox(height: 30),
+            TextFormField(
+              autocorrect: false,
+              keyboardType: TextInputType.number,
+              decoration: InputDecorations.authInputDecoration(
+                hintText: '645823019',
+                labelText: 'Telèfon',
+              ),
+              onChanged: (value) => loginForm.movil = value,
+              validator: (value) {
+                return (value != null && value.length == 9)
+                    ? null
+                    : 'Format incorrecte';
+              },
+            ),
             SizedBox(height: 30),
             TextFormField(
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecorations.authInputDecoration(
-                hintText: 'correu@exemple.com',
+                hintText: 'correo@ejemplo.kom',
                 labelText: 'Correu',
               ),
               onChanged: (value) => loginForm.email = value,
@@ -56,9 +83,7 @@ class _LoginForm extends StatelessWidget {
                     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
                 RegExp regExp = new RegExp(pattern);
 
-                return regExp.hasMatch(value ?? '')
-                    ? null
-                    : 'Format incorrecte';
+                return regExp.hasMatch(value ?? '') ? null : 'Format incorrecte';
               },
             ),
             SizedBox(height: 30),
@@ -77,31 +102,8 @@ class _LoginForm extends StatelessWidget {
                     : 'Mínim 6 caràcters';
               },
             ),
-            const SizedBox(height: 30),
+            SizedBox(height: 30),
             _Button(loginForm: loginForm),
-            const SizedBox(height: 40),
-            MaterialButton(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
-                    'No tens compte? ',
-                    style: TextStyle(color: Colors.black45, fontSize: 15),
-                  ),
-                  Text(
-                    "Registra't!",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              onPressed: () async {
-                await Future.delayed(Duration(seconds: 1));
-                Navigator.pushNamed(context, 'register');
-              },
-            ),
           ],
         ),
       ),
@@ -120,14 +122,14 @@ class _Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         disabledColor: Colors.grey,
         elevation: 0,
         color: Color(0xFF54C59C),
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
             child: Text(
-              loginForm.isLoading ? 'Entrant' : 'ENTRAR',
+              loginForm.isLoading ? 'En proces' : 'REGISTRAR-SE',
               style: TextStyle(color: Colors.white),
             )),
         onPressed: loginForm.isLoading

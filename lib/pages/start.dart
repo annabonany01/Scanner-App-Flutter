@@ -1,43 +1,82 @@
 import 'package:flutter/material.dart';
-import 'package:qr_scanner/widgets/background.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:qr_scanner/pages/aula.dart';
+import 'package:qr_scanner/pages/observacions.dart';
+import 'package:qr_scanner/pages/scanner_page.dart';
 
-class Start extends StatelessWidget {
-
-
+class Start extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Background(),
-        MainContent()
-      ],
-    );
-  }
+  State<Start> createState() => _StartState();
 }
 
-class MainContent extends StatelessWidget {
+class _StartState extends State<Start> {
+  int _currentIndex = 0;
+  Text _pageTitle = Text('Classe A');
+
+  final List<Widget> _pages = [
+    Aula(),
+    ScannerPage(),
+    Observacions(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-
-    final textStyle = TextStyle(fontSize: 50, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 250, 215, 161));
-    
-    return SafeArea(
-      bottom: false,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(height: 150,),
-          Text('Doc Scanner', style: textStyle, overflow: TextOverflow.clip),
-          SizedBox(height: 80,),
-          Icon(Icons.document_scanner_rounded, size: 100, color:  Color.fromARGB(255, 250, 215, 161)),
-    
-          Expanded(child: Container()),
-      
-          Icon(Icons.keyboard_arrow_down_rounded, size: 100, color: Color.fromARGB(255, 165, 71, 12)), 
-    
-        ],
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 70,
+          title: _pageTitle,
+          backgroundColor: Color.fromARGB(255, 147, 203, 183),
+          centerTitle: true,
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () =>
+                    Navigator.pushReplacementNamed(context, 'class'),
+              );
+            },
+          ),
+        ),
+        body: IndexedStack(
+          index: _currentIndex,
+          children: _pages,
+        ),
+        bottomNavigationBar: ConvexAppBar(
+          backgroundColor: Color.fromARGB(255, 147, 203, 183),
+          shadowColor: Color.fromARGB(255, 147, 203, 183),
+          style: TabStyle.fixedCircle,
+          items: [
+            TabItem(title: 'Aula', icon: Icons.groups),
+            TabItem(
+              icon: Container(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(Icons.document_scanner_outlined,
+                    color: Color.fromARGB(255, 147, 203, 183), size: 40),
+              ),
+            ),
+            TabItem(title: "Observacions", icon: Icons.note_alt_outlined),
+          ],
+          onTap: (int index) {
+            setState(() {
+              _currentIndex = index;
+              switch (index) {
+                case 0:
+                  _pageTitle = Text('Classe A \n Aula', textAlign: TextAlign.center);
+                  break;
+                case 1:
+                  _pageTitle = Text('Classe A \n Escàner', textAlign: TextAlign.center);
+                  break;
+                case 2:
+                  _pageTitle = Text('Classe A \n Observacions', textAlign: TextAlign.center);
+                  break;
+              }
+            });
+          },
+        ),
       ),
     );
   }

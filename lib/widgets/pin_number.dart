@@ -10,24 +10,24 @@ class PinNumber extends StatelessWidget {
     return TextFormField(
       autocorrect: false,
       obscureText: false,
-      cursorColor:  Color.fromARGB(255, 165, 71, 12),
+      cursorColor:  Color(0xFF54C59C),
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
         labelText: "Teacher Pin",
-        labelStyle: TextStyle(color: Color.fromARGB(255, 165, 71, 12)),
+        labelStyle: TextStyle(color: Color(0xFF54C59C)),
         focusedBorder: OutlineInputBorder(
           borderSide:
-            BorderSide(color: Color.fromARGB(255, 165, 71, 12), width: 4.0),
+            BorderSide(color: Color(0xFF54C59C), width: 3.0),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color.fromARGB(255, 165, 71, 12), width: 2.0),
+          borderSide: BorderSide(color: Color(0xFF54C59C), width: 2.0),
         ),
       ),
       maxLength: 4,
       validator: ( value ) {
         return ( value != null && value.length == 4 ) 
           ? null
-          : 'Minimum 4 characters';                                    
+          : 'Mínim 4 caràcters';                                    
       },
     );
   }

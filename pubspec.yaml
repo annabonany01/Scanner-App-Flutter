@@ -35,6 +35,11 @@ dependencies:
     sdk: flutter
   provider: ^6.0.5
   uuid: ^3.0.7
+  convex_bottom_bar: ^3.2.0
+  flutter_initicon: ^3.0.0+1
+  random_color: ^1.0.6-nullsafety
+  http: ^0.13.5
+  image_picker: ^0.8.7+5
 
 dev_dependencies:
 
