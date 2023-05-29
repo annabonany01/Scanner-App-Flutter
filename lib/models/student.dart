@@ -8,8 +8,9 @@ class Student {
   final int id;
   final Color color;
   final List<Document> scannedDocuments;
+  String? assistencia; 
 
-  Student({required this.name, required this.id, required this.color, this.scannedDocuments = const []})
+  Student({required this.name, required this.id, required this.color, this.scannedDocuments = const [], this.assistencia = 'Pendent'})
       : icon = Initicon(text: name);
 
 }

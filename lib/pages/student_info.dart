@@ -19,9 +19,10 @@ class _StudentInfoState extends State<StudentInfo> {
       appBar: AppBar(
         toolbarHeight: 70,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(widget.name),
+            SizedBox(width: 10),
             Initicon(
               text: widget.name,
               backgroundColor: widget.color,
@@ -62,7 +63,7 @@ class _GraficaButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushReplacementNamed(context, 'obs');
+        Navigator.pushReplacementNamed(context, 'grafiques');
       },
       child: Container(
         width: 300,
@@ -96,7 +97,7 @@ class _AssistenciaButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushReplacementNamed(context, 'obs');
+        Navigator.pushReplacementNamed(context, 'assistencia');
       },
       child: Container(
         width: 130,

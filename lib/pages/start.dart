@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:qr_scanner/pages/assistencia.dart';
 import 'package:qr_scanner/pages/aula.dart';
-import 'package:qr_scanner/pages/observacions.dart';
 import 'package:qr_scanner/pages/scanner_page.dart';
 
 class Start extends StatefulWidget {
@@ -16,7 +16,7 @@ class _StartState extends State<Start> {
   final List<Widget> _pages = [
     Aula(),
     ScannerPage(),
-    Observacions(),
+    Assistencia(),
   ];
 
   @override
@@ -58,7 +58,7 @@ class _StartState extends State<Start> {
                     color: Color.fromARGB(255, 147, 203, 183), size: 40),
               ),
             ),
-            TabItem(title: "Observacions", icon: Icons.note_alt_outlined),
+            TabItem(title: "Assistència", icon: Icons.schedule_rounded),
           ],
           onTap: (int index) {
             setState(() {
@@ -71,7 +71,7 @@ class _StartState extends State<Start> {
                   _pageTitle = Text('Classe A \n Escàner', textAlign: TextAlign.center);
                   break;
                 case 2:
-                  _pageTitle = Text('Classe A \n Observacions', textAlign: TextAlign.center);
+                  _pageTitle = Text('Classe A \n Assistència', textAlign: TextAlign.center);
                   break;
               }
             });

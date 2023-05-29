@@ -34,7 +34,7 @@ class PositivePage extends StatelessWidget {
       onTap: () => {},
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(70),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

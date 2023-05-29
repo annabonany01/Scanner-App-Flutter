@@ -5,7 +5,9 @@ import '../models/student.dart';
 import '../models/student_list.dart';
 
 class Aula extends StatelessWidget {
-  StudentList studentList = StudentList();
+  final StudentList studentList = StudentList();
+
+  Aula({super.key});
 
   @override
   Widget build(BuildContext context) {

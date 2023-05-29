@@ -10,6 +10,21 @@ class Observacions extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 70,
+          title: Text('Observacions'),
+          backgroundColor: Color.fromARGB(255, 147, 203, 183),
+          centerTitle: true,
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () =>
+                    Navigator.pop(context),
+              );
+            },
+          ),
+        ),
         body: Column(
           children: [
             SizedBox(
