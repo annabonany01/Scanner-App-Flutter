@@ -30,7 +30,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.2
-  document_scanner_flutter: ^0.2.7
+  #document_scanner_flutter: ^0.2.7
   flutter:
     sdk: flutter
   provider: ^6.0.5
@@ -40,6 +40,7 @@ dependencies:
   random_color: ^1.0.6-nullsafety
   http: ^0.13.5
   image_picker: ^0.8.7+5
+  #ocr_data_extractor: ^0.0.26
 
 dev_dependencies:
 

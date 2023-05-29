@@ -2,17 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:qr_scanner/pages/negativePage.dart';
 import 'package:qr_scanner/pages/positivePage.dart';
 
-class Observacions extends StatefulWidget {
+class Observacions extends StatelessWidget {
   const Observacions({Key? key}) : super(key: key);
 
-  @override
-  _ObservacionsState createState() => _ObservacionsState();
-}
-
-class _ObservacionsState extends State<Observacions> {
-  int _selectedIndex = 0;
-
-  final _observacionsState = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

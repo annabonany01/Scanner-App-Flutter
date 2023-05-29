@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:qr_scanner/models/document.dart';
-import 'package:qr_scanner/models/student.dart';
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 
@@ -36,13 +35,33 @@ class DocumentService extends ChangeNotifier {
       final tempDoc = Document.fromMap(value);
       tempDoc.id = key;
       documents.add(tempDoc);
-      print(documents[0]);
     });
 
     isLoading = false;
     notifyListeners();
     return documents;
   }
+
+  Future loadLastDocument() async {
+  isLoading = true;
+  notifyListeners();
+
+  final url = Uri.https(_baseUrl, 'documents.json');
+  final resp = await http.get(url);
+
+  final Map<String, dynamic> documentsMap = json.decode(resp.body);
+
+  if (documentsMap.isNotEmpty) {
+    final lastDocumentKey = documentsMap.keys.last;
+    final lastDocumentData = documentsMap[lastDocumentKey];
+    final lastDocument = Document.fromMap(lastDocumentData);
+    lastDocument.id = lastDocumentKey;
+    selectedDocument = lastDocument;
+  }
+
+  isLoading = false;
+  notifyListeners();
+}
 
   Future updateLastDocument(Document document) async {
     isLoading = true;
@@ -63,7 +82,6 @@ class DocumentService extends ChangeNotifier {
   Future saveOrCreateDocument(Document document) async {
     isSaving = true;
     notifyListeners();
-
     if (document.id == null) {
       createDocument(document);
     } else {
@@ -84,13 +102,21 @@ class DocumentService extends ChangeNotifier {
   }
 
   Future<String> createDocument(Document document) async {
-    
+    uploadImage();
     final url = Uri.https(_baseUrl, 'documents.json');
     final resp = await http.post(url, body: document.toJson());
-    
+    final decodedData = json.decode(resp.body);
+
     document.id = uuid.v4();
     documents.add(document);
     return document.id!;
+  }
+
+  void updateSelectedDocumentImage(String path) {
+    this.selectedDocument.image = path;
+    this.newDocumentFile = File.fromUri(Uri(path: path));
+
+    notifyListeners();
   }
 
   Future<String?> uploadImage() async {
@@ -107,7 +133,6 @@ class DocumentService extends ChangeNotifier {
     imageUploadRequest.files.add(file);
     final streamResponse = await imageUploadRequest.send();
     final resp = await http.Response.fromStream(streamResponse);
-
     if (resp.statusCode != 200 && resp.statusCode != 201) {
       print('algo salió mal');
       print(resp.body);
@@ -117,12 +142,6 @@ class DocumentService extends ChangeNotifier {
     final decodedData = json.decode(resp.body);
     return decodedData['secure_url'];
   }
-
-  // void changeNameDocument(Document document, Student name) {
-  //   document.id = uuid.v4();
-  //   document.student = name;
-  //   notifyListeners();
-  // }
 
   void deleteDocument(Document document) {
     documents.remove(document);

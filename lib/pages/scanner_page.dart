@@ -1,18 +1,13 @@
+import 'dart:developer';
 import 'dart:io';
-
-import 'package:document_scanner_flutter/document_scanner_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_scanner/models/document.dart';
 import 'package:qr_scanner/pages/loading_screen.dart';
 import '../services/document_service.dart';
+import 'package:image_picker/image_picker.dart';
 
-class ScannerPage extends StatefulWidget {
-  @override
-  State<ScannerPage> createState() => _ScannerPageState();
-}
-
-class _ScannerPageState extends State<ScannerPage> {
+class ScannerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final documentService = Provider.of<DocumentService>(context);
@@ -20,10 +15,12 @@ class _ScannerPageState extends State<ScannerPage> {
 
     return Scaffold(
       body: Center(
-        child: buildHistory(documentService),
+        child: _buildHistory(documentService),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _startScan(context, documentService),
+        onPressed: () async {
+          _startCamera(context, documentService);
+        },
         tooltip: 'Escanejar document',
         backgroundColor: Colors.purple[300],
         child: const Icon(Icons.photo_camera_outlined),
@@ -31,7 +28,7 @@ class _ScannerPageState extends State<ScannerPage> {
     );
   }
 
-  Widget buildHistory(DocumentService documentService) {
+  Widget _buildHistory(DocumentService documentService) {
     if (documentService.documents.isEmpty) {
       return const Text('Encara no has escanejat cap document');
     } else {
@@ -52,19 +49,16 @@ class _ScannerPageState extends State<ScannerPage> {
                         documentService.documents[index].image!, 'Doc $index');
                   },
                   child: Container(
-                    width: 50,
-                    height: 50,
-                    child: Image.file(File(documentService.documents[index].image!)),
-                  ),
-                  ),
-              
+                      width: 50,
+                      height: 50,
+                      child: getImage(documentService.documents[index].image!)),
+                ),
                 trailing: IconButton(
                   icon: const Icon(Icons.delete),
                   onPressed: () {
-                    //Dialog(context, documentService, elements, index);
+                    Dialog(context, documentService, index);
                   },
-                )
-              );
+                ));
           },
           separatorBuilder: (context, index) {
             return const Divider(
@@ -77,8 +71,8 @@ class _ScannerPageState extends State<ScannerPage> {
     }
   }
 
-  Future<dynamic> Dialog(BuildContext context, DocumentService documentService,
-      List<Document> elements, int index) {
+  Future<dynamic> Dialog(
+      BuildContext context, DocumentService documentService, int index) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -94,7 +88,8 @@ class _ScannerPageState extends State<ScannerPage> {
                 style: TextButton.styleFrom(foregroundColor: Colors.red),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  //documentService.deleteDocElement(elements[index]);
+                  documentService
+                      .deleteDocument(documentService.documents[index]);
                 },
               ),
             ],
@@ -109,7 +104,7 @@ class _ScannerPageState extends State<ScannerPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(text),
-          content: Image(image: FileImage(File(image))),
+          content: getImage(image),
           actions: [
             TextButton(
               child: Text('Cerrar', style: TextStyle(color: Colors.black)),
@@ -123,19 +118,44 @@ class _ScannerPageState extends State<ScannerPage> {
     );
   }
 
-  void _startScan(BuildContext context, DocumentService documentService) async {
-    File? image = await DocumentScannerFlutter.launch(context);
-    if (image != null) {
-      documentService.saveOrCreateDocument(
-        Document(
-            image: image.path, mark: 0, check: false, id: null, student: null),
+  Widget getImage(String? image) {
+    if (image == null) {
+      return Image(
+        image: AssetImage('assets/no_image2.jpg'),
+        fit: BoxFit.cover,
       );
-      setState(() {
-        //actualiza la pagina
-        documentService.isLoading = true;
-        documentService.updateLastDocument(documentService.documents.last);
-        
-      });
+    } else if (image.startsWith('http')) {
+      return FadeInImage(
+        placeholder: AssetImage('assets/loading.gif'),
+        image: NetworkImage(image),
+        fit: BoxFit.cover,
+      );
+    } else {
+      Image.file(
+        File(image),
+        fit: BoxFit.cover,
+      );
+    }
+    throw Exception('No s\'ha pogut carregar la imatge');
+  }
+
+  void _startCamera(
+      BuildContext context, DocumentService documentService) async {
+    final picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(
+      source: ImageSource.camera,
+    );
+    if (pickedFile == null) {
+      print('No seleccionó nada');
+      return;
+    } else {
+      final file = File(pickedFile.path);
+      documentService.newDocumentFile = file;
+      String? imageUrl = await documentService.uploadImage();
+      Document newdocument = new Document(image: imageUrl, mark: 0, check: false, id: null, student: null);
+      await documentService.saveOrCreateDocument(newdocument);
+      log('Document creat!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+      await documentService.loadLastDocument();
     }
   }
 }

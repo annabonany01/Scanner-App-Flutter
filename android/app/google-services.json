@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "43079998581",
+    "firebase_url": "https://doc-scanner-15eb0-default-rtdb.firebaseio.com",
+    "project_id": "doc-scanner-15eb0",
+    "storage_bucket": "doc-scanner-15eb0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43079998581:android:9d72a14d0aeb62defc2c3c",
+        "android_client_info": {
+          "package_name": "com.example.qr_scanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "43079998581-vs2a34fb37siievr3dpltp07htl2i8j8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWQUDk0XWWT1vNW-zHYZyWv9Aph-1VYZA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "43079998581-vs2a34fb37siievr3dpltp07htl2i8j8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

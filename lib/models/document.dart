@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:qr_scanner/models/student.dart';
 
 class Document {
     bool check;
@@ -23,7 +21,7 @@ class Document {
 
     factory Document.fromMap(Map<String, dynamic> json) => Document(
         check: json["check"],
-        //id: json["id"],
+        id: json["id"],
         image: json["image"],
         mark: json["mark"],
         student: json["student"],
@@ -31,7 +29,7 @@ class Document {
 
     Map<String, dynamic> toMap() => {
         "check": check,
-        //"id": id,
+        "id": id,
         "image": image,
         "mark": mark,
         "student": student,
