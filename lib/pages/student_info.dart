@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_initicon/flutter_initicon.dart';
+import 'package:qr_scanner/pages/correccio.dart';
+import 'package:qr_scanner/pages/grafiques.dart';
 
 class StudentInfo extends StatefulWidget {
   final String name;
@@ -7,7 +9,6 @@ class StudentInfo extends StatefulWidget {
   final Color color;
 
   StudentInfo({required this.name, required this.id, required this.color});
-
   @override
   State<StudentInfo> createState() => _StudentInfoState();
 }
@@ -35,7 +36,7 @@ class _StudentInfoState extends State<StudentInfo> {
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            _CorrectionButton(),
+            _CorrectionButton(name: widget.name,),
             SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -46,7 +47,7 @@ class _StudentInfoState extends State<StudentInfo> {
               ],
             ),
             SizedBox(height: 30),
-            _GraficaButton()
+            _GraficaButton(name: widget.name),
           ]),
         ),
       ),
@@ -57,13 +58,19 @@ class _StudentInfoState extends State<StudentInfo> {
 class _GraficaButton extends StatelessWidget {
   const _GraficaButton({
     super.key,
+    required this.name,
   });
-
+  final String name;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushReplacementNamed(context, 'grafiques');
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Grafiques(
+                      name: name,
+                    )));
       },
       child: Container(
         width: 300,
@@ -158,14 +165,19 @@ class _ObsButton extends StatelessWidget {
 
 class _CorrectionButton extends StatelessWidget {
   const _CorrectionButton({
-    super.key,
+    super.key, required this.name,
   });
-
+  final String name;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushReplacementNamed(context, 'correccio');
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Correccio(
+                      name: name,
+                    )));
       },
       child: Container(
         width: 300,

@@ -40,6 +40,12 @@ dependencies:
   random_color: ^1.0.6-nullsafety
   http: ^0.13.5
   image_picker: ^0.8.7+5
+  syncfusion_flutter_charts: ^21.2.8
+  pdf: ^3.10.4
+  path_provider: ^2.0.15
+  open_file_safe: ^3.2.3
+  screenshot: ^2.1.0
+  progress_dialog_null_safe: ^1.0.7
   #ocr_data_extractor: ^0.0.26
 
 dev_dependencies:

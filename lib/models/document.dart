@@ -4,15 +4,17 @@ class Document {
     bool check;
     String? id;
     String? image;
-    int mark;
+    String? mark;
     String? student;
+    String? competencia;
 
     Document({
         required this.check,
         this.id,
         this.image,
-        required this.mark,
+        this.mark,
         this.student,
+        this.competencia = 'No definida'
     });
 
     factory Document.fromJson(String str) => Document.fromMap(json.decode(str));
@@ -25,6 +27,7 @@ class Document {
         image: json["image"],
         mark: json["mark"],
         student: json["student"],
+        competencia: json["competencia"]
     );
 
     Map<String, dynamic> toMap() => {
@@ -33,6 +36,7 @@ class Document {
         "image": image,
         "mark": mark,
         "student": student,
+        "competencia": competencia
     };
 
     Document copy() => Document(
@@ -41,5 +45,6 @@ class Document {
         image: image,
         mark: mark,
         student: student,
+        competencia: competencia
     );
 }

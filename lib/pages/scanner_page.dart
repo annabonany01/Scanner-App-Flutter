@@ -3,19 +3,58 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_scanner/models/document.dart';
+import 'package:qr_scanner/models/student.dart';
+import 'package:qr_scanner/models/student_list.dart';
 import 'package:qr_scanner/pages/loading_screen.dart';
+import 'package:qr_scanner/widgets/show_dialog_custom.dart';
 import '../services/document_service.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
 
-class ScannerPage extends StatelessWidget {
+class ScannerPage extends StatefulWidget {
+  @override
+  State<ScannerPage> createState() => _ScannerPageState();
+}
+
+class _ScannerPageState extends State<ScannerPage> {
+  final StudentList studentList = StudentList();
+  String selectedStudent = 'No assignat';
+  late ProgressDialog pr;
+
   @override
   Widget build(BuildContext context) {
     final documentService = Provider.of<DocumentService>(context);
     if (documentService.isLoading) return LoadingScreen();
+    List<Student> students = studentList.students;
+    List<String> studentsNames = students.map((e) => e.name).toList();
+    studentsNames.sort((a, b) => a.compareTo(b));
+
+    pr = ProgressDialog(context);
+    pr.style(
+      message: 'Carregant document...',
+      borderRadius: 10.0,
+      backgroundColor: Colors.white,
+      progressWidget: Container(
+        padding: const EdgeInsets.all(8.0),
+        child: CircularProgressIndicator(
+          color: Color.fromARGB(255, 147, 203, 183),
+          strokeWidth: 3,
+        ),
+      ),
+      elevation: 10.0,
+      insetAnimCurve: Curves.easeInOut,
+      progress: 0.0,
+      maxProgress: 100.0,
+      messageTextStyle: TextStyle(
+        color: Colors.black,
+        fontSize: 15,
+        fontWeight: FontWeight.w600,
+      ),
+    );
 
     return Scaffold(
       body: Center(
-        child: _buildHistory(documentService),
+        child: _buildHistory(context, documentService, studentsNames, students),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -28,7 +67,9 @@ class ScannerPage extends StatelessWidget {
     );
   }
 
-  Widget _buildHistory(DocumentService documentService) {
+  Widget _buildHistory(BuildContext context, DocumentService documentService,
+      List<String> studentsNames, List<Student> students) {
+    String selectedStudent = 'No assignat';
     if (documentService.documents.isEmpty) {
       return const Text('Encara no has escanejat cap document');
     } else {
@@ -38,27 +79,62 @@ class ScannerPage extends StatelessWidget {
           physics: BouncingScrollPhysics(),
           itemCount: documentService.documents.length,
           itemBuilder: (BuildContext context, int index) {
-            return ListTile(
+            final documentIndex = documentService.documents.length - index;
+            return Container(
+              child: ListTile(
                 title: Text(
-                  'Doc $index',
+                  'Document $documentIndex',
                   style: const TextStyle(fontSize: 15),
                 ),
+                subtitle: (documentService.documents[index].student == null)
+                    ? Text('Alumne no assignat', style: TextStyle(fontSize: 11))
+                    : Text(
+                        'Alumne: ${documentService.documents[index].student}',
+                        style: TextStyle(fontSize: 11)),
                 leading: GestureDetector(
                   onTap: () {
-                    DrawerImage(context,
-                        documentService.documents[index].image!, 'Doc $index');
+                    DrawerImage(
+                        context,
+                        documentService.documents[index].image!,
+                        'Document ${index + 1}');
                   },
                   child: Container(
                       width: 50,
                       height: 50,
                       child: getImage(documentService.documents[index].image!)),
                 ),
-                trailing: IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () {
-                    Dialog(context, documentService, index);
-                  },
-                ));
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.person_add_alt_1_rounded),
+                      tooltip: 'Assignar alumne',
+                      onPressed: () {
+                        ShowDialogCustom.showDialogCustom(
+                            context,
+                            'Selecciona un alumne:',
+                            studentsNames,
+                            selectedStudent, (value) async {
+                          setState(() {
+                            selectedStudent = value;
+                            documentService.documents[index].student =
+                                selectedStudent;
+                          });
+                          await documentService.updateDocument(documentService.documents[index]);
+                        });
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.delete),
+                      tooltip: 'Eliminar document',
+                      onPressed: () {
+                        Dialog(context, documentService, index);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
           },
           separatorBuilder: (context, index) {
             return const Divider(
@@ -77,6 +153,9 @@ class ScannerPage extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
             actions: [
               TextButton(
                 child: Text("Cancel·lar"),
@@ -86,10 +165,9 @@ class ScannerPage extends StatelessWidget {
               TextButton(
                 child: Text("Eliminar"),
                 style: TextButton.styleFrom(foregroundColor: Colors.red),
-                onPressed: () {
+                onPressed: () async {
                   Navigator.of(context).pop();
-                  documentService
-                      .deleteDocument(documentService.documents[index]);
+                  documentService.deleteDocument(documentService.documents[index]);
                 },
               ),
             ],
@@ -103,7 +181,11 @@ class ScannerPage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(text),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          title:
+              Text(text, style: TextStyle(color: Colors.black, fontSize: 17)),
           content: getImage(image),
           actions: [
             TextButton(
@@ -144,6 +226,7 @@ class ScannerPage extends StatelessWidget {
     final picker = ImagePicker();
     final XFile? pickedFile = await picker.pickImage(
       source: ImageSource.camera,
+      imageQuality: 10,
     );
     if (pickedFile == null) {
       print('No seleccionó nada');
@@ -151,11 +234,16 @@ class ScannerPage extends StatelessWidget {
     } else {
       final file = File(pickedFile.path);
       documentService.newDocumentFile = file;
+      await pr.show();
       String? imageUrl = await documentService.uploadImage();
-      Document newdocument = new Document(image: imageUrl, mark: 0, check: false, id: null, student: null);
+      Document newdocument = Document(
+          image: imageUrl, mark: null, check: false, id: null, student: null);
       await documentService.saveOrCreateDocument(newdocument);
       log('Document creat!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
       await documentService.loadLastDocument();
+      setState(() {
+      });
+      await pr.hide();
     }
   }
 }

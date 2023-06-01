@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:qr_scanner/pages/assistencia.dart';
 import 'package:qr_scanner/pages/aula.dart';
 import 'package:qr_scanner/pages/class.dart';
-import 'package:qr_scanner/pages/correccio.dart';
-import 'package:qr_scanner/pages/grafiques.dart';
 import 'package:qr_scanner/pages/home_page.dart';
 import 'package:qr_scanner/pages/observacions.dart';
 import 'package:qr_scanner/pages/pin_page.dart';
@@ -35,7 +33,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'QR Scanner',
-      initialRoute: 'start',
+      initialRoute: 'home',
       routes: { 
         'home': (_) => HomePage(),
         'pin': (_) => PinPage(),
@@ -45,8 +43,6 @@ class MyApp extends StatelessWidget {
         'class': (_) => Class(),
         'aula': (_) => Aula(),
         'obs': (_) => Observacions(),
-        'correccio': (_) => Correccio(),
-        'grafiques': (_) => Grafiques(),
         'assistencia': (_) => Assistencia(),
 
       },

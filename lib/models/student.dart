@@ -7,10 +7,11 @@ class Student {
   final Initicon? icon;
   final int id;
   final Color color;
-  final List<Document> scannedDocuments;
+  List<Document> scannedDocuments;
+  List<String> observacions;
   String? assistencia; 
 
-  Student({required this.name, required this.id, required this.color, this.scannedDocuments = const [], this.assistencia = 'Pendent'})
+  Student({required this.name, required this.id, required this.color, this.scannedDocuments = const [], this.observacions = const [], this.assistencia = 'Pendent'})
       : icon = Initicon(text: name);
 
 }

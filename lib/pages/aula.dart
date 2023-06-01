@@ -12,6 +12,7 @@ class Aula extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Student> students = studentList.students;
+    students.sort((a, b) => a.name.compareTo(b.name));
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -24,13 +25,11 @@ class Aula extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Hero(
-                            tag: students[index].id, 
-                            child: StudentInfo(
-                              name: students[index].name,
-                              id: students[index].id,
-                              color: students[index].color,
-                            ))));
+                        builder: (context) => StudentInfo(
+                          name: students[index].name,
+                          id: students[index].id,
+                          color: students[index].color,
+                        )));
               },
               child: Padding(
                 padding: const EdgeInsets.all(10.0),

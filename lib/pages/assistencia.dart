@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_initicon/flutter_initicon.dart';
 import 'package:qr_scanner/models/student.dart';
 import 'package:qr_scanner/models/student_list.dart';
 
@@ -10,8 +9,7 @@ class Assistencia extends StatefulWidget {
 
 class _AssistenciaState extends State<Assistencia> {
   final StudentList studentList = StudentList();
-
-  List<String> asistencias = [
+  List<String> assistencies = [
     'A classe',
     'Arriba tard',
     'Justificat',
@@ -21,14 +19,16 @@ class _AssistenciaState extends State<Assistencia> {
 
   @override
   Widget build(BuildContext context) {
+    List<Student> students = studentList.students;
+    students.sort((a, b) => a.name.compareTo(b.name));
     return Scaffold(
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListView.separated(
-            itemCount: studentList.students.length,
+            itemCount: students.length,
             itemBuilder: (BuildContext context, int index) {
-              final Student student = studentList.students[index];
+              final Student student = students[index];
               return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -55,7 +55,7 @@ class _AssistenciaState extends State<Assistencia> {
                               fontSize: 14,
                               fontWeight: FontWeight.bold),
                           value: student.assistencia,
-                          items: asistencias.map((item) {
+                          items: assistencies.map((item) {
                             return DropdownMenuItem(
                               value: item,
                               child: Text(item),
@@ -71,7 +71,7 @@ class _AssistenciaState extends State<Assistencia> {
                             color: Colors.transparent,
                           ),
                           selectedItemBuilder: (BuildContext context) {
-                            return asistencias.map<Widget>((String item) {
+                            return assistencies.map<Widget>((String item) {
                               Widget icon;
                               if (item == 'A classe') {
                                 icon =

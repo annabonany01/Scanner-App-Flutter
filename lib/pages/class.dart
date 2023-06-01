@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class Class extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
         body: SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 70),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 70),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const  [
+          children: [
             Image(image: AssetImage('assets/educat.png'), width: 200),
             SizedBox(height: 70),
             _ElevatedButton(

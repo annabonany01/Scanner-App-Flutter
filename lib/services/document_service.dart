@@ -108,15 +108,10 @@ class DocumentService extends ChangeNotifier {
     final decodedData = json.decode(resp.body);
 
     document.id = uuid.v4();
-    documents.add(document);
+    //agregar el documento el primero de la lista
+    documents.insert(0, document);
+    //documents.add(document);
     return document.id!;
-  }
-
-  void updateSelectedDocumentImage(String path) {
-    this.selectedDocument.image = path;
-    this.newDocumentFile = File.fromUri(Uri(path: path));
-
-    notifyListeners();
   }
 
   Future<String?> uploadImage() async {
@@ -143,7 +138,7 @@ class DocumentService extends ChangeNotifier {
     return decodedData['secure_url'];
   }
 
-  void deleteDocument(Document document) {
+  Future<void> deleteDocument(Document document) async {
     documents.remove(document);
     notifyListeners();
   }
