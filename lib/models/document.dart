@@ -2,6 +2,7 @@ import 'dart:convert';
 
 class Document {
     bool check;
+    String name;
     String? id;
     String? image;
     String? mark;
@@ -10,6 +11,7 @@ class Document {
 
     Document({
         required this.check,
+        required this.name,
         this.id,
         this.image,
         this.mark,
@@ -23,6 +25,7 @@ class Document {
 
     factory Document.fromMap(Map<String, dynamic> json) => Document(
         check: json["check"],
+        name: json["name"],
         id: json["id"],
         image: json["image"],
         mark: json["mark"],
@@ -32,6 +35,7 @@ class Document {
 
     Map<String, dynamic> toMap() => {
         "check": check,
+        "name": name,
         "id": id,
         "image": image,
         "mark": mark,
@@ -41,6 +45,7 @@ class Document {
 
     Document copy() => Document(
         check: check,
+        name: name,
         id: id,
         image: image,
         mark: mark,

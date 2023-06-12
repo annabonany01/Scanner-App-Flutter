@@ -76,64 +76,64 @@ class _ScannerPageState extends State<ScannerPage> {
     } else {
       return Padding(
         padding: const EdgeInsets.all(10.0),
+        
         child: ListView.separated(
+          //ordenar documentos por nombre 
           physics: const BouncingScrollPhysics(),
           itemCount: documentService.documents.length,
           itemBuilder: (BuildContext context, int index) {
-            final documentIndex = documentService.documents.length - index;
-            return Container(
-              child: ListTile(
-                title: Text(
-                  'Document $documentIndex',
-                  style: const TextStyle(fontSize: 15),
-                ),
-                subtitle: (documentService.documents[index].student == null)
-                    ? const Text('Alumne no assignat', style: TextStyle(fontSize: 11))
-                    : Text(
-                        'Alumne: ${documentService.documents[index].student}',
-                        style: TextStyle(fontSize: 11)),
-                leading: GestureDetector(
-                  onTap: () {
-                    DrawerImage(
-                        context,
-                        documentService.documents[index].image!,
-                        'Document $documentIndex');
-                  },
-                  child: Container(
-                      width: 50,
-                      height: 50,
-                      child: getImage(documentService.documents[index].image!)),
-                ),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.person_add_alt_1_rounded),
-                      tooltip: 'Assignar alumne',
-                      onPressed: () {
-                        ShowDialogCustom.showDialogCustom(
-                            context,
-                            'Selecciona un alumne:',
-                            studentsNames,
-                            selectedStudent, (value) async {
-                          setState(() {
-                            selectedStudent = value;
-                            documentService.documents[index].student =
-                                selectedStudent;
-                          });
-                          await documentService.updateDocument(documentService.documents[index]);
+            documentService.documents.sort((a, b) => b.name.compareTo(a.name));
+            return ListTile(
+              title: Text(
+                documentService.documents[index].name,
+                style: const TextStyle(fontSize: 15),
+              ),
+              subtitle: (documentService.documents[index].student == null)
+                  ? const Text('Alumne no assignat', style: TextStyle(fontSize: 11))
+                  : Text(
+                      'Alumne: ${documentService.documents[index].student}',
+                      style: const TextStyle(fontSize: 11)),
+              leading: GestureDetector(
+                onTap: () {
+                  DrawerImage(
+                      context,
+                      documentService.documents[index].image!,
+                      documentService.documents[index].name);
+                },
+                child: Container(
+                    width: 50,
+                    height: 50,
+                    child: getImage(documentService.documents[index].image!)),
+              ),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.person_add_alt_1_rounded),
+                    tooltip: 'Assignar alumne',
+                    onPressed: () {
+                      ShowDialogCustom.showDialogCustom(
+                          context,
+                          'Selecciona un alumne:',
+                          studentsNames,
+                          selectedStudent, (value) async {
+                        setState(() {
+                          selectedStudent = value;
+                          documentService.documents[index].student =
+                              selectedStudent;
                         });
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.delete),
-                      tooltip: 'Eliminar document',
-                      onPressed: () {
-                        Dialog(context, documentService, index);
-                      },
-                    ),
-                  ],
-                ),
+                        await documentService.updateDocument(documentService.documents[index]);
+                      });
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.delete),
+                    tooltip: 'Eliminar document',
+                    onPressed: () {
+                      Dialog(context, documentService, index);
+                    },
+                  ),
+                ],
               ),
             );
           },
@@ -238,7 +238,7 @@ class _ScannerPageState extends State<ScannerPage> {
       await pr.show();
       String? imageUrl = await documentService.uploadImage();
       Document newdocument = Document(
-          image: imageUrl, mark: null, check: false, id: null, student: null);
+          image: imageUrl, mark: null, check: false, id: null, student: null, name: 'Document ${documentService.documents.length + 1}');
       await documentService.saveOrCreateDocument(newdocument);
       await documentService.loadLastDocument();
       setState(() {

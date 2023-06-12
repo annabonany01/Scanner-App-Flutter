@@ -108,7 +108,8 @@ class DocumentService extends ChangeNotifier {
     final decodedData = json.decode(resp.body);
 
     document.id = uuid.v4();
-    documents.insert(0, document);
+    documents.add(document);
+    //documents.insert(0, document);
     return document.id!;
   }
 

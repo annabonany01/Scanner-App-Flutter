@@ -48,7 +48,6 @@ class _CorreccioState extends State<Correccio> {
           physics: const BouncingScrollPhysics(),
           itemCount: documentService.documents.where((element) => element.student == widget.name).length,
           itemBuilder: (BuildContext context, int index) {
-            final documentIndex = documentService.documents.length - index;
             return ListTile(
               onTap: () async {
                 Document updatedDocument = await Navigator.push(
@@ -67,7 +66,7 @@ class _CorreccioState extends State<Correccio> {
                 });
               },
               title: Text(
-                'Doc $documentIndex',
+                documentService.documents[index].name,
                 style: const TextStyle(fontSize: 15),
               ),
               leading: GestureDetector(
