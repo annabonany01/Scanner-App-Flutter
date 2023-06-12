@@ -31,9 +31,11 @@ The topic of the application is education in primary contexts (6-12 years old). 
 The main function is to allow teachers to photograph work done by their students and to automatically classify these images and assign them to each student's profile, using tools such as Google Lens or similar. This automated approach speeds up the correction process as it can be performed from anywhere and at any time. In addition, it allows the assessment of the different competences and visualization of the progress for each area in a graphical and visual way.
 The development of this mobile educational app presents technical and pedagogical challenges, but also offers great benefits. Taking advantage of the capabilities of mobile devices and visual recognition tools, teachers can save time, personalize teaching, annotate daily observations, and provide reliable feedback.
 
+#### Video Demo
+
+[![Video Demo](https://img.youtube.com/vi/fC5O8z67jqY/0.jpg)](https://www.youtube.com/watch?v=fC5O8z67jqY)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
 
 ### Built With
 
