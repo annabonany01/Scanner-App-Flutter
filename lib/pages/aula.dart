@@ -17,7 +17,7 @@ class Aula extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: GridView.count(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           crossAxisCount: 3,
           children: List.generate(students.length, (index) {
             return GestureDetector(

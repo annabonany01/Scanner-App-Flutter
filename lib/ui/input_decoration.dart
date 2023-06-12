@@ -37,7 +37,7 @@ class InputDecorations {
         ),
 
         filled: true,
-        fillColor: (Color.fromARGB(226, 255, 255, 255)),
+        fillColor: (const Color.fromARGB(226, 255, 255, 255)),
         hintText: hintText,
         hintStyle: const TextStyle(
           color: Colors.black38

@@ -39,13 +39,13 @@ class _CorreccioState extends State<Correccio> {
   }
 
   Widget _buildHistory(DocumentService documentService) {
-    if (documentService.documents.isEmpty) {
+    if (documentService.documents.where((element) => element.student == widget.name).length == 0) {
       return const Text('Aquest estudiant no té cap document escanejat');
     } else {
       return Padding(
         padding: const EdgeInsets.all(10.0),
         child: ListView.separated(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           itemCount: documentService.documents.where((element) => element.student == widget.name).length,
           itemBuilder: (BuildContext context, int index) {
             final documentIndex = documentService.documents.length - index;
@@ -101,13 +101,13 @@ class _CorreccioState extends State<Correccio> {
 
   Widget getImage(String? image) {
     if (image == null) {
-      return Image(
+      return const Image(
         image: AssetImage('assets/no_image2.jpg'),
         fit: BoxFit.cover,
       );
     } else if (image.startsWith('http')) {
       return FadeInImage(
-        placeholder: AssetImage('assets/loading.gif'),
+        placeholder: const AssetImage('assets/loading.gif'),
         image: NetworkImage(image),
         fit: BoxFit.cover,
       );

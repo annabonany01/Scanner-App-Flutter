@@ -14,12 +14,12 @@ class ShowDialogCustom{
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           title: Text(title,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           content: Container(
             width: double.maxFinite,
             child: ListView.builder(
               shrinkWrap: true,
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               itemCount: content.length,
               itemBuilder: (BuildContext context, int index) {
                 final String selectedContent = content[index];
@@ -37,7 +37,7 @@ class ShowDialogCustom{
           ),
           actions: [
             TextButton(
-              child: Text(
+              child: const Text(
                 'Cancel·lar',
                 style: TextStyle(color: Colors.black),
               ),

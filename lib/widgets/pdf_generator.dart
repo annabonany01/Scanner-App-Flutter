@@ -25,8 +25,8 @@ class PdfGenerator {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('PDF generat correctament'),
-        duration: Duration(seconds: 10),
+        content: const Text('PDF generat correctament'),
+        duration: const Duration(seconds: 10),
         action: SnackBarAction(
           label: 'Obrir',
           textColor: Colors.greenAccent,

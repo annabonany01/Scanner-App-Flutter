@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../providers/login_form_provider.dart';
 import '../ui/input_decoration.dart';
 
@@ -46,7 +45,7 @@ class _LoginForm extends StatelessWidget {
               autocorrect: false,
               keyboardType: TextInputType.name,
               decoration: InputDecorations.authInputDecoration(
-                hintText: 'Marta Gomez',
+                hintText: 'xxxx xxxxxx',
                 labelText: 'Nom i Cognom',
               ),
               onChanged: (value) => loginForm.name = value,
@@ -59,7 +58,7 @@ class _LoginForm extends StatelessWidget {
               autocorrect: false,
               keyboardType: TextInputType.number,
               decoration: InputDecorations.authInputDecoration(
-                hintText: '645823019',
+                hintText: 'xxxxxxxxx',
                 labelText: 'Telèfon',
               ),
               onChanged: (value) => loginForm.movil = value,
@@ -74,7 +73,7 @@ class _LoginForm extends StatelessWidget {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecorations.authInputDecoration(
-                hintText: 'correo@ejemplo.kom',
+                hintText: 'xxxxx@xxxxx.xx',
                 labelText: 'Correu',
               ),
               onChanged: (value) => loginForm.email = value,
@@ -129,7 +128,7 @@ class _Button extends StatelessWidget {
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
             child: Text(
-              loginForm.isLoading ? 'En proces' : 'REGISTRAR-SE',
+              loginForm.isLoading ? 'En procés' : 'REGISTRAR-SE',
               style: TextStyle(color: Colors.white),
             )),
         onPressed: loginForm.isLoading
@@ -143,7 +142,7 @@ class _Button extends StatelessWidget {
 
                 await Future.delayed(Duration(seconds: 2));
 
-                // TODO: validar si el login es correcto
+                // TODO: validar si el login es correcte
                 loginForm.isLoading = false;
 
                 Navigator.pushReplacementNamed(context, 'class');

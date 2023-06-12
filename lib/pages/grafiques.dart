@@ -44,8 +44,8 @@ class _GrafiquesState extends State<Grafiques> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 70,
-        title: Text('Gràfiques'),
-        backgroundColor: Color.fromARGB(255, 147, 203, 183),
+        title: const Text('Gràfiques'),
+        backgroundColor: const Color.fromARGB(255, 147, 203, 183),
         centerTitle: true,
         leading: Builder(
           builder: (BuildContext context) {
@@ -58,7 +58,7 @@ class _GrafiquesState extends State<Grafiques> {
       ),
       body: Column(
         children: [
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Screenshot(
@@ -69,21 +69,21 @@ class _GrafiquesState extends State<Grafiques> {
                   primaryXAxis: CategoryAxis(
                     title: AxisTitle(
                         text: 'Documents',
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                             fontSize: 15, fontStyle: FontStyle.italic)),
                     labelPlacement: LabelPlacement.onTicks,
                   ),
                   primaryYAxis: NumericAxis(
                       title: AxisTitle(
                           text: 'Qualificacions',
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                               fontSize: 15, fontStyle: FontStyle.italic)),
                       maximum: 10),
                   legend: Legend(
                       isVisible: true,
                       title: LegendTitle(
                           text: 'Competències',
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                               fontSize: 13, fontWeight: FontWeight.bold),
                           alignment: ChartAlignment.near),
                       position: LegendPosition.bottom,
@@ -94,7 +94,7 @@ class _GrafiquesState extends State<Grafiques> {
                       name: 'Digital',
                       dataSource: data1,
                       markerSettings:
-                          MarkerSettings(isVisible: true, width: 5, height: 5),
+                          const MarkerSettings(isVisible: true, width: 5, height: 5),
                       xValueMapper: (ChartData point, _) => point.x,
                       yValueMapper: (ChartData point, _) => point.y,
                     ),
@@ -102,7 +102,7 @@ class _GrafiquesState extends State<Grafiques> {
                       name: 'Matemàtica i en ciència, tecnologia i enginyeria',
                       dataSource: data2,
                       markerSettings:
-                          MarkerSettings(isVisible: true, width: 5, height: 5),
+                          const MarkerSettings(isVisible: true, width: 5, height: 5),
                       xValueMapper: (ChartData point, _) => point.x,
                       yValueMapper: (ChartData point, _) => point.y,
                     ),
@@ -110,7 +110,7 @@ class _GrafiquesState extends State<Grafiques> {
                       name: 'Personal, social i d\'aprendre a aprendre',
                       dataSource: data3,
                       markerSettings:
-                          MarkerSettings(isVisible: true, width: 5, height: 5),
+                          const MarkerSettings(isVisible: true, width: 5, height: 5),
                       xValueMapper: (ChartData point, _) => point.x,
                       yValueMapper: (ChartData point, _) => point.y,
                     ),
@@ -118,7 +118,7 @@ class _GrafiquesState extends State<Grafiques> {
                       name: 'Comunicació lingüística',
                       dataSource: data4,
                       markerSettings:
-                          MarkerSettings(isVisible: true, width: 5, height: 5),
+                          const MarkerSettings(isVisible: true, width: 5, height: 5),
                       xValueMapper: (ChartData point, _) => point.x,
                       yValueMapper: (ChartData point, _) => point.y,
                     ),
@@ -127,7 +127,7 @@ class _GrafiquesState extends State<Grafiques> {
               ),
             ),
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
@@ -142,14 +142,14 @@ class _GrafiquesState extends State<Grafiques> {
                     print(onError);
                   });
                 },
-                child: Text('Desar com a PDF'),
                 style: ElevatedButton.styleFrom(
                   textStyle:
-                      TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                      const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   backgroundColor: Colors.purple[300],
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0)),
                 ),
+                child: const Text('Desar com a PDF'),
               ),
             ),
           ),

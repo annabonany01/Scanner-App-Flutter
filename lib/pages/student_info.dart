@@ -23,7 +23,7 @@ class _StudentInfoState extends State<StudentInfo> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(widget.name),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Initicon(
               text: widget.name,
               backgroundColor: widget.color,
@@ -37,8 +37,8 @@ class _StudentInfoState extends State<StudentInfo> {
           padding: const EdgeInsets.all(20.0),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             _CorrectionButton(name: widget.name,),
-            SizedBox(height: 30),
-            Row(
+            const SizedBox(height: 30),
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _ObsButton(),

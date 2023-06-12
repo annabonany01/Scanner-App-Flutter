@@ -14,19 +14,19 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromARGB(255, 250, 215, 161),
+      color: const Color.fromARGB(255, 250, 215, 161),
       child: Center(
         child: TextButton(
           style: TextButton.styleFrom(
-            backgroundColor: Color.fromARGB(255, 165, 71, 12),
-            shape: StadiumBorder()
+            backgroundColor: const Color.fromARGB(255, 165, 71, 12),
+            shape: const StadiumBorder()
           ),
           onPressed: () {
             Navigator.pushNamed(context, page);
           },
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 40),
-            child: Text(this.title, style: TextStyle(color:Color.fromARGB(255, 250, 215, 161), fontSize: 20)),
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: Text(title, style: const TextStyle(color:Color.fromARGB(255, 250, 215, 161), fontSize: 20)),
           ),
           )
       ),

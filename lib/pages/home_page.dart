@@ -3,21 +3,23 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
-    Timer(Duration(seconds: 1), () {
+    Timer(const Duration(seconds: 1), () {
       Navigator.pushReplacementNamed(context, 'pin');
     });
     return Scaffold(
         body: Container(
         child: PageView(
-          physics: BouncingScrollPhysics(), //comportamiendo ios
+          physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.vertical,
-          children: [
+          children: const [
                 SafeArea(
                   bottom: false,
                   child: Column(
-                    children: const [
+                    children: [
                       SizedBox(
                         height: 150,
                       ),

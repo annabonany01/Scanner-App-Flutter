@@ -19,8 +19,8 @@ class NegativePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.count(
       crossAxisCount: 2,
-      padding: EdgeInsets.all(20),
-      physics: BouncingScrollPhysics(),
+      padding: const EdgeInsets.all(20),
+      physics: const BouncingScrollPhysics(),
       mainAxisSpacing: 16,
       crossAxisSpacing: 16,
       children: _negativeOptions
@@ -40,11 +40,11 @@ class NegativePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(option['icon'], size: 30, color: Colors.red,),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               option['title'],
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -53,35 +53,4 @@ class NegativePage extends StatelessWidget {
       ),
     );
   }
-
-  // void _showNotesDialog(BuildContext context, String option) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text('Añadir nota'),
-  //         content: TextField(
-  //           controller: notesController,
-  //           decoration: InputDecoration(
-  //             hintText: 'Añade una nota',
-  //           ),
-  //         ),
-  //         actions: [
-  //           TextButton(
-  //             onPressed: () => Navigator.of(context).pop(),
-  //             child: Text('CANCELAR'),
-  //           ),
-  //           TextButton(
-  //             onPressed: () {
-  //               // Aquí se podría guardar la nota en el perfil del alumno
-  //               notesController.clear();
-  //               Navigator.of(context).pop();
-  //             },
-  //             child: Text('GUARDAR'),
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
 }

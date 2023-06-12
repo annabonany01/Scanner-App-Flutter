@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Class extends StatelessWidget {
+  const Class({super.key});
+
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
@@ -61,8 +63,8 @@ class _ElevatedButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             icon,
-            SizedBox(width: 30),
-            Text(title, style: TextStyle(fontSize: 15, color: Colors.black)),
+            const SizedBox(width: 30),
+            Text(title, style: const TextStyle(fontSize: 15, color: Colors.black)),
           ],
         ),
       ),

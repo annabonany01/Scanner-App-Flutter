@@ -3,6 +3,8 @@ import 'package:qr_scanner/models/student.dart';
 import 'package:qr_scanner/models/student_list.dart';
 
 class Assistencia extends StatefulWidget {
+  const Assistencia({super.key});
+
   @override
   _AssistenciaState createState() => _AssistenciaState();
 }
@@ -15,7 +17,7 @@ class _AssistenciaState extends State<Assistencia> {
     'Justificat',
     'Pendent'
   ];
-  String dropdownvalue = 'Pendent';
+  String dropdownvalue = 'A classe';
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class _AssistenciaState extends State<Assistencia> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListView.separated(
+            physics: const BouncingScrollPhysics(),
             itemCount: students.length,
             itemBuilder: (BuildContext context, int index) {
               final Student student = students[index];
@@ -34,7 +37,7 @@ class _AssistenciaState extends State<Assistencia> {
                   children: [
                     Text(
                       student.name,
-                      style: TextStyle(fontSize: 17),
+                      style: const TextStyle(fontSize: 17),
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -50,11 +53,13 @@ class _AssistenciaState extends State<Assistencia> {
                         child: DropdownButton(
                           dropdownColor: Colors.white,
                           borderRadius: BorderRadius.circular(10),
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.black,
                               fontSize: 14,
                               fontWeight: FontWeight.bold),
-                          value: student.assistencia,
+                          value: (student.assistencia != null)
+                              ? student.assistencia
+                              : dropdownvalue,
                           items: assistencies.map((item) {
                             return DropdownMenuItem(
                               value: item,
@@ -75,20 +80,20 @@ class _AssistenciaState extends State<Assistencia> {
                               Widget icon;
                               if (item == 'A classe') {
                                 icon =
-                                    Icon(Icons.check_circle, color: Colors.green);
+                                    const Icon(Icons.check_circle, color: Colors.green);
                               } else if (item == 'Arriba tard') {
-                                icon = Icon(Icons.error, color: Colors.red);
+                                icon = const Icon(Icons.error, color: Colors.red);
                               } else if (item == 'Justificat') {
-                                icon = Icon(Icons.recommend_rounded,
+                                icon = const Icon(Icons.recommend_rounded,
                                     color: Colors.orange);
                               } else {
                                 icon =
-                                    Icon(Icons.help_rounded, color: Colors.grey);
+                                    const Icon(Icons.help_rounded, color: Colors.grey);
                               }
                               return Row(
                                 children: [
                                   icon,
-                                  SizedBox(width: 5),
+                                  const SizedBox(width: 5),
                                   Text(item),
                                 ],
                               );

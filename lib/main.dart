@@ -11,9 +11,11 @@ import 'package:provider/provider.dart';
 import 'package:qr_scanner/pages/start.dart';
 import 'package:qr_scanner/services/document_service.dart';
 
-void main() => runApp(AppState());
+void main() => runApp(const AppState());
 
 class AppState extends StatelessWidget {
+  const AppState({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -35,22 +37,22 @@ class MyApp extends StatelessWidget {
       title: 'QR Scanner',
       initialRoute: 'home',
       routes: { 
-        'home': (_) => HomePage(),
-        'pin': (_) => PinPage(),
-        'start': (_) => Start(),
-        'scanner': (_) => ScannerPage(),
+        'home': (_) => const HomePage(),
+        'pin': (_) => const PinPage(),
+        'start': (_) => const Start(),
+        'scanner': (_) => const ScannerPage(),
         'register': (_) => Register(),
-        'class': (_) => Class(),
+        'class': (_) => const Class(),
         'aula': (_) => Aula(),
-        'obs': (_) => Observacions(),
-        'assistencia': (_) => Assistencia(),
+        'obs': (_) => const Observacions(),
+        'assistencia': (_) => const Assistencia(),
 
       },
       theme: ThemeData(
-          primaryColor: Color(0xFF54C59C),
-          secondaryHeaderColor: Color(0xFFC131C3),
-          canvasColor: Color.fromARGB(255, 206, 231, 222),
-          appBarTheme: AppBarTheme(
+          primaryColor: const Color(0xFF54C59C),
+          secondaryHeaderColor: const Color(0xFFC131C3),
+          canvasColor: const Color.fromARGB(255, 206, 231, 222),
+          appBarTheme: const AppBarTheme(
             backgroundColor: Color.fromARGB(255, 147, 203, 183),
           ),
       ),

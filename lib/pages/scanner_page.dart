@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +11,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
 
 class ScannerPage extends StatefulWidget {
+  const ScannerPage({super.key});
+
   @override
   State<ScannerPage> createState() => _ScannerPageState();
 }
@@ -24,7 +25,7 @@ class _ScannerPageState extends State<ScannerPage> {
   @override
   Widget build(BuildContext context) {
     final documentService = Provider.of<DocumentService>(context);
-    if (documentService.isLoading) return LoadingScreen();
+    if (documentService.isLoading) return const LoadingScreen();
     List<Student> students = studentList.students;
     List<String> studentsNames = students.map((e) => e.name).toList();
     studentsNames.sort((a, b) => a.compareTo(b));
@@ -36,7 +37,7 @@ class _ScannerPageState extends State<ScannerPage> {
       backgroundColor: Colors.white,
       progressWidget: Container(
         padding: const EdgeInsets.all(8.0),
-        child: CircularProgressIndicator(
+        child: const CircularProgressIndicator(
           color: Color.fromARGB(255, 147, 203, 183),
           strokeWidth: 3,
         ),
@@ -45,7 +46,7 @@ class _ScannerPageState extends State<ScannerPage> {
       insetAnimCurve: Curves.easeInOut,
       progress: 0.0,
       maxProgress: 100.0,
-      messageTextStyle: TextStyle(
+      messageTextStyle: const TextStyle(
         color: Colors.black,
         fontSize: 15,
         fontWeight: FontWeight.w600,
@@ -76,7 +77,7 @@ class _ScannerPageState extends State<ScannerPage> {
       return Padding(
         padding: const EdgeInsets.all(10.0),
         child: ListView.separated(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           itemCount: documentService.documents.length,
           itemBuilder: (BuildContext context, int index) {
             final documentIndex = documentService.documents.length - index;
@@ -87,7 +88,7 @@ class _ScannerPageState extends State<ScannerPage> {
                   style: const TextStyle(fontSize: 15),
                 ),
                 subtitle: (documentService.documents[index].student == null)
-                    ? Text('Alumne no assignat', style: TextStyle(fontSize: 11))
+                    ? const Text('Alumne no assignat', style: TextStyle(fontSize: 11))
                     : Text(
                         'Alumne: ${documentService.documents[index].student}',
                         style: TextStyle(fontSize: 11)),
@@ -96,7 +97,7 @@ class _ScannerPageState extends State<ScannerPage> {
                     DrawerImage(
                         context,
                         documentService.documents[index].image!,
-                        'Document ${index + 1}');
+                        'Document $documentIndex');
                   },
                   child: Container(
                       width: 50,
@@ -158,20 +159,20 @@ class _ScannerPageState extends State<ScannerPage> {
             ),
             actions: [
               TextButton(
-                child: Text("Cancel·lar"),
                 style: TextButton.styleFrom(foregroundColor: Colors.grey[700]),
                 onPressed: () => Navigator.of(context).pop(),
+                child: const Text("Cancel·lar"),
               ),
               TextButton(
-                child: Text("Eliminar"),
                 style: TextButton.styleFrom(foregroundColor: Colors.red),
                 onPressed: () async {
                   Navigator.of(context).pop();
                   documentService.deleteDocument(documentService.documents[index]);
                 },
+                child: const Text("Eliminar"),
               ),
             ],
-            content: Text("Estàs segur que vols eliminar aquest document?"),
+            content: const Text("Estàs segur que vols eliminar aquest document?"),
           );
         });
   }
@@ -185,11 +186,11 @@ class _ScannerPageState extends State<ScannerPage> {
             borderRadius: BorderRadius.circular(20.0),
           ),
           title:
-              Text(text, style: TextStyle(color: Colors.black, fontSize: 17)),
+              Text(text, style: const TextStyle(color: Colors.black, fontSize: 17)),
           content: getImage(image),
           actions: [
             TextButton(
-              child: Text('Cerrar', style: TextStyle(color: Colors.black)),
+              child: const Text('Tancar', style: TextStyle(color: Colors.black)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -202,13 +203,13 @@ class _ScannerPageState extends State<ScannerPage> {
 
   Widget getImage(String? image) {
     if (image == null) {
-      return Image(
+      return const Image(
         image: AssetImage('assets/no_image2.jpg'),
         fit: BoxFit.cover,
       );
     } else if (image.startsWith('http')) {
       return FadeInImage(
-        placeholder: AssetImage('assets/loading.gif'),
+        placeholder: const AssetImage('assets/loading.gif'),
         image: NetworkImage(image),
         fit: BoxFit.cover,
       );
@@ -239,7 +240,6 @@ class _ScannerPageState extends State<ScannerPage> {
       Document newdocument = Document(
           image: imageUrl, mark: null, check: false, id: null, student: null);
       await documentService.saveOrCreateDocument(newdocument);
-      log('Document creat!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
       await documentService.loadLastDocument();
       setState(() {
       });

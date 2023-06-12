@@ -12,8 +12,8 @@ class Observacions extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: 70,
-          title: Text('Observacions'),
-          backgroundColor: Color.fromARGB(255, 147, 203, 183),
+          title: const Text('Observacions'),
+          backgroundColor: const Color.fromARGB(255, 147, 203, 183),
           centerTitle: true,
           leading: Builder(
             builder: (BuildContext context) {
@@ -27,9 +27,8 @@ class Observacions extends StatelessWidget {
         ),
         body: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: kToolbarHeight,
-
               child: TabBar(
                 indicatorColor: Color.fromARGB(255, 119, 194, 167),
                 tabs: [
@@ -59,11 +58,6 @@ class Observacions extends StatelessWidget {
               ),
             ),
           ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.purple[300],
-          onPressed: () {},
-          child: Icon(Icons.add),
         ),
       ),
     );

@@ -10,7 +10,7 @@ class PinNumber extends StatelessWidget {
     return TextFormField(
       autocorrect: false,
       obscureText: false,
-      cursorColor:  Color(0xFF54C59C),
+      cursorColor:  const Color(0xFF54C59C),
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
         labelText: "Teacher Pin",

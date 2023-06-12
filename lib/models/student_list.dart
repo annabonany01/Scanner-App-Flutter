@@ -32,7 +32,6 @@ class StudentList {
     Student(name: 'Isabel', id: 7819403265, color: RandomColor().randomColor()),
   ];
 
-  // Singleton pattern: instancia única de StudentManager
   static final StudentList _instance = StudentList._internal();
   factory StudentList() => _instance;
   

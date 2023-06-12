@@ -8,7 +8,7 @@ import 'package:qr_scanner/widgets/show_dialog_custom.dart';
 class DocInfo extends StatefulWidget {
   final Document document;
 
-  DocInfo({super.key, required this.document});
+  const DocInfo({super.key, required this.document});
 
   @override
   State<DocInfo> createState() => _DocInfoState();
@@ -44,7 +44,7 @@ class _DocInfoState extends State<DocInfo> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 70,
-        title: Text('Document'),
+        title: const Text('Document'),
         backgroundColor: Color.fromARGB(255, 147, 203, 183),
         centerTitle: true,
         leading: Builder(
@@ -68,7 +68,7 @@ class _DocInfoState extends State<DocInfo> {
             iconSize: 50,
             tooltip: 'Desar canvis',
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
         ],
       ),
       body: Padding(
@@ -146,14 +146,14 @@ class _DocInfoState extends State<DocInfo> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Container(
               height: 400,
               child: Center(
                 child: Image.network(widget.document.image!),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

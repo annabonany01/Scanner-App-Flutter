@@ -4,11 +4,13 @@ import 'package:qr_scanner/providers/login_form_provider.dart';
 import 'package:qr_scanner/ui/input_decoration.dart';
 
 class PinPage extends StatelessWidget {
+  const PinPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 70),
               child:
@@ -18,7 +20,7 @@ class PinPage extends StatelessWidget {
                   children: [
                     Container(
                         width: 200,
-                        child: Image(image: AssetImage('assets/educat.png'))),
+                        child: const Image(image: AssetImage('assets/educat.png'))),
                     const SizedBox(height: 30),
                     ChangeNotifierProvider(
                         create: (_) => LoginFormProvider(),
@@ -42,7 +44,7 @@ class _LoginForm extends StatelessWidget {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           children: [
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             TextFormField(
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
@@ -54,14 +56,14 @@ class _LoginForm extends StatelessWidget {
               validator: (value) {
                 String pattern =
                     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                RegExp regExp = new RegExp(pattern);
+                RegExp regExp = RegExp(pattern);
 
                 return regExp.hasMatch(value ?? '')
                     ? null
                     : 'Format incorrecte';
               },
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             TextFormField(
               autocorrect: false,
               obscureText: true,
@@ -81,9 +83,9 @@ class _LoginForm extends StatelessWidget {
             _Button(loginForm: loginForm),
             const SizedBox(height: 40),
             MaterialButton(
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
                     'No tens compte? ',
                     style: TextStyle(color: Colors.black45, fontSize: 15),
@@ -98,7 +100,7 @@ class _LoginForm extends StatelessWidget {
                 ],
               ),
               onPressed: () async {
-                await Future.delayed(Duration(seconds: 1));
+                await Future.delayed(const Duration(seconds: 1));
                 Navigator.pushNamed(context, 'register');
               },
             ),
@@ -123,13 +125,7 @@ class _Button extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
         disabledColor: Colors.grey,
         elevation: 0,
-        color: Color(0xFF54C59C),
-        child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-            child: Text(
-              loginForm.isLoading ? 'Entrant' : 'ENTRAR',
-              style: TextStyle(color: Colors.white),
-            )),
+        color: const Color(0xFF54C59C),
         onPressed: loginForm.isLoading
             ? null
             : () async {
@@ -139,12 +135,18 @@ class _Button extends StatelessWidget {
 
                 loginForm.isLoading = true;
 
-                await Future.delayed(Duration(seconds: 2));
+                await Future.delayed(const Duration(seconds: 2));
 
                 // TODO: validar si el login es correcto
                 loginForm.isLoading = false;
 
                 Navigator.pushReplacementNamed(context, 'class');
-              });
+              },
+        child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+            child: Text(
+              loginForm.isLoading ? 'Entrant' : 'ENTRAR',
+              style: const TextStyle(color: Colors.white),
+            )));
   }
 }
